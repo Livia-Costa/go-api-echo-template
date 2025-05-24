@@ -1,0 +1,9 @@
+datasource:
+  host: "localhost"
+  port: 5432
+  user: "devuser"
+  password: "devpasswd"
+  database: "account"
+  sslmode: "disable"
+  migration:
+    source: "file://./database/schema"

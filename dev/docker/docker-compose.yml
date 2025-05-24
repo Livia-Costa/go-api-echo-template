@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:16.4
+    restart: always
+    environment:
+      POSTGRES_DB: account
+      POSTGRES_USER: devuser
+      POSTGRES_PASSWORD: devpasswd
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+volumes:
+  postgres_data:

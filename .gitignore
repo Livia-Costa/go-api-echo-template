@@ -1,0 +1,9 @@
+# Binaries for programs and plugins
+/bin
+
+# Generated files
+wire_gen.go
+mock_*.go
+
+# Others
+.devcontainer/

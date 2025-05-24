@@ -1,0 +1,50 @@
+version: "3"
+
+tasks:
+  # compile
+  wire:
+    cmds:
+      - go install github.com/google/wire/cmd/wire@latest
+      - go generate ./internal/wire.go
+  docs:
+    cmds:
+      - go install github.com/swaggo/swag/cmd/swag@latest
+      - swag init -o ./docs/swagger
+  compile:
+    deps: [wire, docs]
+
+  # check
+  ## lint
+  fmt:
+    cmds:
+      - go fmt ./...
+  vet:
+    cmds:
+      - go vet ./...
+  # lint:
+  #   cmds:
+  #     - go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+  #     - golangci-lint run ./...
+
+  ## tests
+  mock:
+    cmds:
+      - go install github.com/golang/mock/mockgen@latest
+      - go generate -run=mockgen ./...
+  test:
+    deps: [mock]
+    cmds:
+      - go test -v ./...
+
+  check:
+    deps: [fmt, vet, test]
+
+  build:
+    deps: [compile, check]
+    cmds:
+      - go build -o bin/app main.go
+
+  run:
+    cmds:
+      - go run main.go
+    silent: true
